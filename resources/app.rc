@@ -1,0 +1,116 @@
+/*
+ * app.rc - Windows resources for RailNet PMS
+ */
+#include <windows.h>
+#include <commctrl.h>
+#include "gui/resource.h"
+
+IDI_APP ICON "app.ico"
+1 24 "app.manifest"
+
+/* ------------------------------------------------------------------ */
+IDR_ACCEL ACCELERATORS
+BEGIN
+    "S",    IDM_SAVE,           VIRTKEY, CONTROL
+    "O",    IDM_LOAD,           VIRTKEY, CONTROL
+    "N",    IDM_ADD_TRAIN,      VIRTKEY, CONTROL
+    "D",    IDM_DELAY_TRAIN,    VIRTKEY, CONTROL
+    "1",    IDM_PAGE_DASH,      VIRTKEY, CONTROL
+    "2",    IDM_PAGE_TRAINS,    VIRTKEY, CONTROL
+    "3",    IDM_PAGE_PLATFORMS, VIRTKEY, CONTROL
+    "4",    IDM_PAGE_SIGNALS,   VIRTKEY, CONTROL
+    "5",    IDM_PAGE_DELAYS,    VIRTKEY, CONTROL
+    "6",    IDM_PAGE_LOG,       VIRTKEY, CONTROL
+    VK_F5,  IDM_RUN,            VIRTKEY
+    VK_F6,  IDM_STEP1,          VIRTKEY
+    VK_F7,  IDM_STEP5,          VIRTKEY
+    VK_F8,  IDM_STEP15,         VIRTKEY
+END
+
+/* ------------------------------------------------------------------ */
+IDD_TRAIN DIALOGEX 0, 0, 290, 222
+STYLE DS_MODALFRAME | DS_CENTER | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Train"
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "Train number", -1, 12, 14, 70, 9
+    EDITTEXT        IDC_T_NUMBER, 88, 12, 64, 14, ES_NUMBER | ES_AUTOHSCROLL
+    LTEXT           "Type", -1, 164, 14, 24, 9
+    COMBOBOX        IDC_T_TYPE, 192, 12, 86, 120, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "Train name", -1, 12, 36, 70, 9
+    EDITTEXT        IDC_T_NAME, 88, 34, 190, 14, ES_AUTOHSCROLL
+    LTEXT           "From", -1, 12, 58, 70, 9
+    EDITTEXT        IDC_T_FROM, 88, 56, 190, 14, ES_AUTOHSCROLL
+    LTEXT           "To", -1, 12, 80, 70, 9
+    EDITTEXT        IDC_T_TO, 88, 78, 190, 14, ES_AUTOHSCROLL
+
+    LTEXT           "Coaches", -1, 12, 102, 70, 9
+    EDITTEXT        IDC_T_COACHES, 88, 100, 44, 14, ES_NUMBER
+    CONTROL         "", IDC_T_COACHES_SPIN, "msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,
+                    0, 0, 0, 0
+
+    LTEXT           "Arrival", -1, 12, 124, 70, 9
+    CONTROL         "", IDC_T_ARR, "SysDateTimePick32", DTS_TIMEFORMAT | DTS_UPDOWN | WS_TABSTOP, 88, 122, 64, 14
+    LTEXT           "Departure", -1, 164, 124, 40, 9
+    CONTROL         "", IDC_T_DEP, "SysDateTimePick32", DTS_TIMEFORMAT | DTS_UPDOWN | WS_TABSTOP, 214, 122, 64, 14
+
+    LTEXT           "Platform", -1, 12, 146, 70, 9
+    COMBOBOX        IDC_T_PLATFORM, 88, 144, 190, 160, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "", IDC_T_HINT, 12, 168, 266, 20
+
+    DEFPUSHBUTTON   "Save", IDOK, 170, 198, 52, 16
+    PUSHBUTTON      "Cancel", IDCANCEL, 226, 198, 52, 16
+END
+
+/* ------------------------------------------------------------------ */
+IDD_DELAY DIALOGEX 0, 0, 270, 160
+STYLE DS_MODALFRAME | DS_CENTER | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Delay"
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    LTEXT           "", IDC_D_TRAIN, 12, 10, 246, 22
+
+    AUTORADIOBUTTON "Add delay", IDC_D_ADD, 12, 40, 70, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Recover time", IDC_D_RECOVER, 92, 40, 80, 10
+
+    LTEXT           "Minutes", -1, 12, 62, 50, 9
+    EDITTEXT        IDC_D_MIN, 70, 60, 44, 14, ES_NUMBER | WS_GROUP
+    CONTROL         "", IDC_D_SPIN, "msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,
+                    0, 0, 0, 0
+
+    LTEXT           "Reason", -1, 12, 84, 50, 9
+    COMBOBOX        IDC_D_REASON, 70, 82, 188, 140, CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "", IDC_D_PREVIEW, 12, 108, 246, 12
+
+    DEFPUSHBUTTON   "Apply", IDOK, 150, 136, 52, 16
+    PUSHBUTTON      "Cancel", IDCANCEL, 206, 136, 52, 16
+END
+
+/* ------------------------------------------------------------------ */
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     1, 1, 0, 0
+PRODUCTVERSION  1, 1, 0, 0
+FILEOS          0x40004
+FILETYPE        0x1
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription",  "RailNet PMS - Railway Platform Management System"
+            VALUE "FileVersion",      "1.1.0"
+            VALUE "ProductName",      "RailNet PMS"
+            VALUE "ProductVersion",   "1.1.0"
+            VALUE "OriginalFilename", "RailNetPMS.exe"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
